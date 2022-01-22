@@ -58,12 +58,12 @@ int main(){
     }
     
     cout << "\n";
-    for(int i = 0; i<8;i++){ // looping jawaban ke bawah
-        for(int j=0;j<jawab[i].length();j++){ // looping jawaban ke samping
+    for(int i = 0; i<8;i++){
+            int j =0; // looping jawaban ke bawah
             for(int k=0;k<7;k++){ // looping soal ke bawah
                 for(int l=0;l<8;l++){ // looping soal ke samping
-                    if(jawab[i][j] == soal[k][l]){ // kalo jawaban sama dengan soal
-                        if(jawab[i][j+1]== soal[k][l+1]){ // kalo jawaban+1 sama dengan soal+1
+                    if(jawab[i][j] == soal[k][l]){ // kalo jawaban sama dengan soal 
+                        if(jawab[i][j+1]== soal[k][l+1]){ // kalo jawaban+1 sama dengan soal+1 (arah kanan)
                             if(jawab[i][j+2]== soal[k][l+2]){
                                 // cout<< i << "," << j << "\n";
                                 // cout << "1. "<<soal[k][l] << "\n";
@@ -76,7 +76,32 @@ int main(){
                                             count++;
                                             if(count == jawab[i].length()){
                                                 l = 8;
-                                                j = jawab[i].length();
+                                                k = 7;
+                                                count = 0;
+                                            }
+                                        }
+                                    }
+                                }
+                                cout << "\n";
+                            }
+                        } 
+                        else if(jawab[i][j+1]== soal[k][l-1]){ // kalo jawaban+1 sama dengan soal-1 (arah kiri)
+                            if(jawab[i][j+2]== soal[k][l-2] && j!= jawab[i].length()-1){
+                                // cout<< i <<", "<< j <<"  gerbang " << "\n";
+                                // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+1] << "\n";
+                                // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+2] << "\n";
+                                // cout << "1. "<<soal[k][l] << "\n";
+                                for(int m=0;m<jawab[i].length();m++){ // looping jawaban ke samping
+                                    // cout<< i <<", "<< j << " dalem " << "\n";
+                                    for(int n=l;n>=0;n--){ // looping soal ke samping
+                                        // cout << "2. "<<soal[k][n] << "\n";
+                                        if(jawab[i][m] == soal[k][n]){
+                                            cout<< soal[k][n]; // disini
+                                            n = 0;
+                                            count++;
+                                            if(count == jawab[i].length()){
+                                                l = 8;
+                                                k = 7;
                                                 count = 0;
                                             }
                                         }
@@ -88,7 +113,6 @@ int main(){
                     }
                 }
             }
-        }
     }
 
 
@@ -104,7 +128,6 @@ int main(){
 
     // cek semua jawaban dalam 8 arah seandainya udah ketemu 1 huruf depan yang sama.
 
-    
     
     
 
