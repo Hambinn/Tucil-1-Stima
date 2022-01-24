@@ -13,7 +13,8 @@ int main(){
     string plc;
     vector<char> ans;
     int mamang[] = {1};
-    string soal[7];
+    // string soal[7];
+    vector<string> soal;
     string kosong;
     string delimiter = " ";
     string line1[7];
@@ -28,23 +29,33 @@ int main(){
     }
 
     for(int i = 0; i<7;i++){
-        getline(myfile, line1[i], '\n');
-        // cout<< line1[i] << "\n";
+        getline(myfile, kosong, '\n');
+        soal.push_back(kosong);
+        // cout << soal[i] << "\n";
     }
 
     for(int i = 0; i<7;i++){
-        int a = 0;
-        for(int j = 0;j<15;j++){
-            if(line1[i][j] != ' '){
-                // cout << line1[i][j];
-                soal[i][a] = line1[i][j];
-                cout << soal[i][a];
-                a++;
+        for(int j = 0; j<15;j++){
+            if(soal[i][j] == ' '){
+                soal[i].erase(j,1);
             }
-            
         }
-        cout << "\n";
+        cout << soal[i] << "\n";
     }
+
+    // for(int i = 0; i<7;i++){
+    //     int a = 0;
+    //     for(int j = 0;j<15;j++){
+    //         if(line1[i][j] != ' '){
+    //             // cout << line1[i][j];
+    //             soal[i].push_back(line1[i][j]);
+    //             cout << soal[i][a];
+    //             a++;
+    //         }
+            
+    //     }
+    //     cout << "\n";
+    // }
 
 
     for(int k = 0; k<2;k++){
@@ -58,11 +69,6 @@ int main(){
         cout << jawab[i] << "\n";
         i++;
     }
-    // for(int i = 0; i<8;i++){
-    //     getline(myfile, jawab[i], '\n');
-    //     cout<< jawab[i] << "\n";
-    //     // cout<< soal[0][0] << "\n";
-    // }
     
     cout << "\n";
     for(int i = 0; i<8;i++){
@@ -71,45 +77,39 @@ int main(){
             // cout << i <<  "\n";
             int j =0; // looping jawaban ke bawah
             for(int k=0;k<7;k++){ // looping soal ke bawah
+                ans.clear();
+                count = 0;
                 for(int l=0;l<8;l++){ // looping soal ke samping
+                    ans.clear();
+                    count = 0;
                     if(jawab[i][j] == soal[k][l]){ // kalo jawaban sama dengan soal 
                         if(jawab[i][j+1]== soal[k][l+1] && j!= jawab[i].length()-1){ // kalo jawaban+1 sama dengan soal+1 (arah kanan)
-                            if(jawab[i][j+2]== soal[k][l+2] && j!= jawab[i].length()-1){
                                 // cout<< i << "," << j << "\n";
                                 // cout << "1. "<<soal[k][l] << "\n";
                                 for(int m=0;m<jawab[i].length();m++){ // looping jawaban ke samping
                                     for(int n=l;n<8;n++){ // looping soal ke samping
-                                        // cout << "2. "<<soal[k][n] << "\n";
                                         n += count;
                                         if(jawab[i][m] == soal[k][n]){
                                             ans.push_back(soal[k][n]); // disini
-                                            // cout << k << ", " << n << "\n";
                                             n = 8;
                                             count++;
                                             if(count == jawab[i].length()){
                                                 l = 8;
                                                 k = 7;
+                                                count = 0;
                                                 for(int x=0;x<ans.size();x++){
                                                     cout << ans[x];
                                                 }
-                                                count = 0;
+
                                             }
                                         }
                                     }
                                 }
-                                cout << "\n";
-                            }
+                                cout << "\n";                            
                         } 
-                        else if(jawab[i][j+1]== soal[k][l-1]&& j!= jawab[i].length()-1){ // kalo jawaban+1 sama dengan soal-1 (arah kiri)
-                            if(jawab[i][j+2]== soal[k][l-2] && j!= jawab[i].length()-1){
-                                // cout<< i <<", "<< j <<"  gerbang " << "\n";
-                                // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+1] << "\n";
-                                // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+2] << "\n";
-                                // cout << "1. "<<soal[k][l] << "\n";
+                        else if(jawab[i][j+1]== soal[k][l-1] &&  j!= jawab[i].length()-1){ // kalo jawaban+1 sama dengan soal-1 (arah kiri)
                                 for(int m=0;m<jawab[i].length();m++){ // looping jawaban ke samping
-                                    // cout<< i <<", "<< j << " dalem " << "\n";
                                     for(int n=l;n>=0;n--){ // looping soal ke samping
-                                        // cout << "2. "<<soal[k][n] << "\n";
                                         n -= count;
                                         if(jawab[i][m] == soal[k][n]){
                                             ans.push_back(soal[k][n]);
@@ -128,96 +128,104 @@ int main(){
                                 }
                                 cout << "\n";
                             }
-                        }
-                        else if(k < 5){
-                            if((jawab[i][j+1] == soal[k+1][l])){
-                                // cout<< i <<", "<< j <<"  gerbang " << "\n";
-                                // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+1] << "\n";
-                                // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+2] << "\n";
-                                if(jawab[i][j+2] == soal[k+2][l]){
-                                    // cout<< i <<", "<< j <<"  gerbang " << "\n";
-                                    // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+1] << "\n";
-                                    // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+2] << "\n";
+                        else if((jawab[i][j+1] == soal[k+1][l])){ // kebawah
                                     for(int m=0;m<jawab[i].length();m++){
                                         for(int n=k;n<7;n++){
-                                            if(jawab[i][m] == soal[n][l]){
-                                                cout << soal[n][l];
+                                            if(jawab[i][m] == soal[n][l] && n!= soal.capacity()-1){
+                                                ans.push_back(soal[n][l]);
                                                 n = 7;
                                                 count++;
                                                 if(count == jawab[i].length()){
+                                                    for(int x=0;x<ans.size();x++){
+                                                        cout << ans[x];
+                                                    }
+                                                    count = 0;
+                                                }
+                                            }else{
+
+                                            }
+                                        }
+                                    }
+                                    cout << "\n";
+                            }
+                        else if(jawab[i][j+1] == soal[k+1][l+1]){
+                                for(int m=0;m<jawab[i].length();m++){
+                                    for(int n=k;n<7;n++){ // loop bawah soal
+                                        n += count;
+                                        for(int o=l;o<8;o++){
+                                            o += count; // loop kanan soal
+                                            if(jawab[i][m] == soal[n][o]&& n!= soal.capacity()-1){
+                                                ans.push_back(soal[n][o]);
+                                                o = 8;
+                                                n = 7;
+                                                count++;
+                                                if(count == jawab[i].length()){
+                                                    for(int x=0;x<ans.size();x++){
+                                                        cout << ans[x];
+                                                    }
                                                     count = 0;
                                                 }
                                             }
                                         }
                                     }
-                                    cout << "\n";
                                 }
+                                cout << "\n";
                             }
-                            else if(jawab[i][j+1] == soal[k+1][l+1]){
-                                if(jawab[i][j+2] == soal[k+2][l+2]){
-                                    for(int m=0;m<jawab[i].length();m++){
-                                        for(int n=k;n<7;n++){ // loop bawah soal
-                                            n += count;
-                                            for(int o=l;o<8;o++){
-                                                o += count; // loop kanan soal
-                                                if(jawab[i][m] == soal[n][o]){
-                                                    cout << soal[n][o];
-                                                    // cout << n << ", " << o << "\n";
-                                                    o = 8;
-                                                    n = 7;
-                                                    count++;
-                                                    if(count == jawab[i].length()){
-                                                        count = 0;
+                        else if(jawab[i][j+1] == soal[k+1][l-1]){
+                            for(int m=0;m<jawab[i].length();m++){
+                                    for(int n=0;n<7;n++){
+                                        n += count;
+                                        for(int o=l;o>=0;o--){
+                                            o -= count;
+                                            if(jawab[i][m] == soal[n][o] && n!= soal.capacity()-1){
+                                                ans.push_back(soal[n][o]);
+                                                o = 0;
+                                                n = 7;
+                                                count ++;
+                                                if(count == jawab[i].length()){
+                                                    for(int x=0;x<ans.size();x++){
+                                                        cout << ans[x];
                                                     }
+                                                    count = 0;
                                                 }
                                             }
                                         }
                                     }
-                                    cout << "\n";
                                 }
-                            }
                         }
-                        else if(k > 2){
-                            if((jawab[i][j+1] == soal[k-1][l])){
-                                // cout<< i <<", "<< j <<"  gerbang " << "\n";
-                                // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+1] << "\n";
-                                // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+2] << "\n";
-                                if(jawab[i][j+2] == soal[k-2][l]){
-                                    // cout<< i <<", "<< j <<"  gerbang " << "\n";
-                                    // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+1] << "\n";
-                                    // cout<< i <<", "<< j <<"  gerbang " << jawab[i][j+2] << "\n";
+                        else if((jawab[i][j+1] == soal[k-1][l])){
                                     for(int m=0;m<jawab[i].length();m++){
                                         for(int n=k;n>=0;n--){
-                                            if(jawab[i][m] == soal[n][l]){
-                                                cout << soal[n][l];
+                                            if(jawab[i][m] == soal[n][l] && n!= soal.capacity()-1){
+                                                ans.push_back(soal[n][l]);
                                                 n = 0;
                                                 count++;
                                                 if(count == jawab[i].length()){
+                                                    for(int x=0;x<ans.size();x++){
+                                                        cout << ans[x];
+                                                    }
                                                     count = 0;
                                                 }
                                             }
                                         }
                                     }
                                     cout << "\n";
-                                }
                             }
                             else if(jawab[i][j+1] == soal[k-1][l-1]){
-                                // cout << k-1 << ", "<< l-1 << "\n";
-                                if(jawab[i][j+2] == soal[k-2][l-2]){
-                                    // cout << "madepsya\n";
                                     for(int m=0;m<jawab[i].length();m++){
                                         for(int n=k;n>=0;n--){ // loop bawah soal
-                                            cout << count << "\n";
                                             n -= count;
                                             for(int o=l;o>=0;o--){
                                                 o -= count; // loop kanan soal
-                                                if(jawab[i][m] == soal[n][o]){
-                                                    cout << soal[n][o];
-                                                    // cout << n << ", " << o << "\n";
+                                                if(jawab[i][m] == soal[n][o] && n!= soal.capacity()-1){
+                                                    ans.push_back(soal[n][o]);
                                                     o = 0;
                                                     n = 0;
                                                     count++;
                                                     if(count == jawab[i].length()){
+                                                        for(int x=0;x<ans.size();x++){
+                                                            cout << ans[x];
+                                                        }
                                                         count = 0;
                                                     }
                                                 }
@@ -225,32 +233,38 @@ int main(){
                                         }
                                     }
                                     cout << "\n";
+                            }
+                            else if(jawab[i][j+1] == soal[k-1][l+1]){
+                                for(int m=0;m<jawab[i].length();m++){
+                                    for(int n=k;n>=0;n--){
+                                        n -= count;
+                                        for(int o=l;o<8;o++){
+                                            o += count;
+                                            if(jawab[i][m] == soal[n][o] && n!= soal.capacity()-1){
+                                                ans.push_back(soal[n][o]);
+                                                o = 8;
+                                                n = 0;
+                                                count ++;
+                                                if(count == jawab[i].length()){
+                                                    for(int x=0;x<ans.size();x++){
+                                                        cout << ans[x];
+                                                    }
+                                                    count = 0;
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                        }
+                        
                     }
                 }
             }
     }
     cout << "\n";
+    cout << soal[7][0] << endl;
+    cout << "aminsky";
 
-
-    // for(int i=0; i<jawab[5].length();i++){
-    //     for(int j=0;j<8;j++){
-    //         if(jawab[5][i] == soal[j][7]){
-    //             cout << jawab[5][i];
-    //             j = 8;
-    //         }
-    //     }
-    // }
-
-    cout << "aman\n";
-    
-
-    // cek semua jawaban dalam 8 arah seandainya udah ketemu 1 huruf depan yang sama.
-
-    
-    
 
     return 0;
 }
